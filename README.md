@@ -1,24 +1,50 @@
-# README
+            _                              _       
+           | |                            (_)      
+      _ __ | | __ _ _   _ _ __ ___   ___   _  ___  
+     | '_ \| |/ _` | | | | '_ ` _ \ / _ \ | |/ _ \
+     | |_) | | (_| | |_| | | | | | |  __/_| | (_) |
+     | .__/|_|\__,_|\__, |_| |_| |_|\___(_)_|\___/
+     | |             __/ |                         
+     |_|            |___/                          
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+______________________________________
+# playme.io
+> Because there aren't enough time-wasters out there already.
 
-Things you may want to cover:
+[![GitHub release](https://img.shields.io/github/release/scalableinternetservices/playme-io.svg?maxAge=2592000)]()
+[![Website](https://img.shields.io/website/http/www.playme.io/.svg?style=flat-square)]()
 
-* Ruby version
+In a world full of web applications trying their hardest to improve productivity, playme.io does its best to do the opposite. It offers an easy way to play multiplayer games with friends, letting you share and join game lobbies with a single link. No more downloading programs, waiting for Flash to stop breaking, signing up for a site you'll never use again, or ads!
 
-* System dependencies
+WIP screenshot: ![](header.png)
 
-* Configuration
+## Installation
 
-* Database creation
+```
+WIP
+```
 
-* Database initialization
+## Usage example
+```
+WIP
+```
+## Development setup
+```
+WIP
+```
+## Release History
 
-* How to run the test suite
+* 0.0.1
+    * Work in progress
 
-* Services (job queues, cache servers, search engines, etc.)
+## Other Stuff
 
-* Deployment instructions
+Built with :heart: by:
+```
+Andy Yu
+Shivam Thapar
+Ravi Jayanthi
+Elise Yuen
+```
 
-* ...
+Distributed under the MIT license. See ``LICENSE`` for more information.
