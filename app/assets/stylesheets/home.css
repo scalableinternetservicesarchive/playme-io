@@ -1,0 +1,21 @@
+.container {
+    font-family: 'Source Sans Pro', sans-serif;
+
+    width: 500px;
+    height: 100px;
+
+    position: absolute;
+    top:0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    margin: auto;
+}
+
+.description {
+  font-size: 2.5em;
+  width: 100%;
+  text-align: center;
+  display: block;
+}
