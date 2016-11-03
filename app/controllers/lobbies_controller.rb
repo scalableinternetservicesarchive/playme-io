@@ -10,12 +10,14 @@ class LobbiesController < ApplicationController
     if @lobby.save
       redirect_to @lobby
     else
-      print @lobby
       render html: "couldn't save lobby"
     end
   end
   def show
-    @lobby = Lobby.find(params[:id])
+    @lobby = Lobby.find_by name: params[:id]
+    if @lobby.nil?
+      raise ActiveRecord::RecordNotFound
+    end
   end
 
   private
