@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  get 'lobby/new'
+  resources :lobbies
   get 'users/new'
   root 'application#landing'
 end
