@@ -1,1 +1,10 @@
 <h1>Lobby <%= @lobby.name %></h1>
+<% if session_activated? %>
+<p>Me: <%= current_session.username %></p>
+<% end %>
+<p> Other users:</p>
+<ul>
+  <% @lobby.sessions.each do |session| %>
+    <li><%= session.username %></li>
+  <% end %>
+</ul>
