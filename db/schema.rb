@@ -27,12 +27,4 @@ ActiveRecord::Schema.define(version: 20161104044956) do
     t.index ["lobby_id"], name: "index_sessions_on_lobby_id"
   end
 
-  create_table "users", force: :cascade do |t|
-    t.string   "name"
-    t.integer  "lobby_id"
-    t.integer  "score"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
 end
