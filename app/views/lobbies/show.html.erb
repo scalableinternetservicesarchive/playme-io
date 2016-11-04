@@ -25,12 +25,17 @@
       <p>Me: <%= current_session.username %></p>
       <% end %>
       <p> Other users:</p>
-      <ul>
         <% @lobby.sessions.each do |session| %>
-          <li><%= session.username %></li>
+          <% if session != @current_session %>
+          <p><%= session.username %></p>
+          <% end %>
         <% end %>
-      </ul>
+        <span align="center">Invite anyone by sharing this link: <input id="roomLink" type="text" onclick="this.select()"/></span>
     </section>
-
   </div>
+  <script type="text/javascript">
+    document.getElementById("roomLink").value = document.location.href;
+
+  </script>
 </body>
+</html>
