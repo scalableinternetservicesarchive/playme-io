@@ -1,0 +1,9 @@
+<% provide(:title, 'All users') %>
+<h1>All lobbies</h1>
+
+
+<ul>
+  <%= @lobbies.each do |lobby| %>
+    <li><%= lobby.id %>: <%= lobby.name %></li>
+  <% end %>
+</ul>

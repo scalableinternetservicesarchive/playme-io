@@ -1,0 +1,10 @@
+<h1>Create lobby</h1>
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <%= form_for(@lobby) do |f| %>
+      <%= f.label :name %>
+      <%= f.text_field :name %>
+      <%= f.submit "Create lobby", class: "btn btn-primary" %>
+    <% end %>
+  </div>
+</div>
