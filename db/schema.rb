@@ -10,12 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161021222756) do
+ActiveRecord::Schema.define(version: 20161104044956) do
 
   create_table "lobbies", force: :cascade do |t|
     t.string   "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_lobbies_on_name"
+  end
+
+  create_table "sessions", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer  "lobby_id"
+    t.string   "username"
+    t.index ["lobby_id"], name: "index_sessions_on_lobby_id"
   end
 
   create_table "users", force: :cascade do |t|
