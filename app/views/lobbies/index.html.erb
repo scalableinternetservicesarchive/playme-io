@@ -1,6 +1,23 @@
 <% provide(:title, 'All users') %>
 <h1>All lobbies</h1>
-
+<div class="games">
+    <div class="imgContainer">
+        <img src="/images/chess.png" height="64" width="64"/>
+        <p>Chess</p>
+    </div>
+    <div class="imgContainer">
+        <img src="/images/basketball.png"/ height="64" width="64"/>
+        <p>Basketball</p>
+    </div>
+    <div class="imgContainer">
+         <img src="/images/tank.png"/ height="64" width="64"/>
+        <p>Tanks</p>
+    </div>
+    <div class="imgContainer">
+         <img src="/images/palette.png"/ height="64" width="64"/>
+        <p>Pictionary</p>
+    </div>
+</div>
 
 <ul>
   <%= @lobbies.each do |lobby| %>

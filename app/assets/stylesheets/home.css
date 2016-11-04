@@ -1,16 +1,28 @@
 .container {
-    font-family: 'Source Sans Pro', sans-serif;
+  font-family: 'Source Sans Pro', sans-serif;
 
-    width: 700px;
-    height: 700px;
+  width: 700px;
+  height: 700px;
 
-    position: absolute;
-    top:0px;
-    bottom: 0;
-    left: 0;
-    right: 0;
+  position: absolute;
+  top:0px;
+  bottom: 0;
+  left: 0;
+  right: 0;
 
-    margin: auto;
+  margin: auto;
+}
+
+.imgContainer {
+  float: left;
+}
+
+.games {
+  margin-top:25px;
+  margin-bottom:25px;
+  margin-left:120px;
+  float: left;
+  width: 100%;
 }
 
 .description {

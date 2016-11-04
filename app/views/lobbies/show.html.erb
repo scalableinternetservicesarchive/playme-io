@@ -20,17 +20,37 @@
 <body>
   <div class="container">
     <section class="content">
-      <h1>Lobby <%= @lobby.name %></h1>
-      <% if session_activated? %>
-      <p>Me: <%= current_session.username %></p>
-      <% end %>
-      <p> Other users:</p>
-        <% @lobby.sessions.each do |session| %>
-          <% if session != @current_session %>
-          <p><%= session.username %></p>
-          <% end %>
+      <h1>Lobby <span style= "color:#3399FF"><%= @lobby.name %></span> </h1>
+      <div class="games">
+          <div class="imgContainer">
+              <img src="/images/chess.png" height="64" width="64"/>
+              <p>Chess</p>
+          </div>
+          <div class="imgContainer">
+              <img src="/images/basketball.png"/ height="64" width="64"/>
+              <p>Basketball</p>
+          </div>
+          <div class="imgContainer">
+               <img src="/images/tank.png"/ height="64" width="64"/>
+              <p>Tanks</p>
+          </div>
+          <div class="imgContainer">
+               <img src="/images/palette.png"/ height="64" width="64"/>
+              <p>Pictionary</p>
+          </div>
+      </div>
+      <div>
+        <% if session_activated? %>
+        <p>Me: <%= current_session.username %></p>
         <% end %>
-        <span align="center">Invite anyone by sharing this link: <input id="roomLink" type="text" onclick="this.select()"/></span>
+        <p> Other users:</p>
+          <% @lobby.sessions.each do |session| %>
+            <% if session != @current_session %>
+            <p><%= session.username %></p>
+            <% end %>
+          <% end %>
+          <span align="center">Invite anyone by sharing this link: <input id="roomLink" type="text" onclick="this.select()"/></span>
+      </div>
     </section>
   </div>
   <script type="text/javascript">
