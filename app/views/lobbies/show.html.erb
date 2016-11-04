@@ -1,10 +1,36 @@
-<h1>Lobby <%= @lobby.name %></h1>
-<% if session_activated? %>
-<p>Me: <%= current_session.username %></p>
-<% end %>
-<p> Other users:</p>
-<ul>
-  <% @lobby.sessions.each do |session| %>
-    <li><%= session.username %></li>
-  <% end %>
-</ul>
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>Play Me | Play Multiplayer Games with Friends</title>
+  <meta name="description" content="Playme.io">
+  <meta name="author" content="Andy Yu">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="app/assets/stylesheets/home.css">
+  <link rel="stylesheet" href="app/assets/stylesheets/normalize.css" />
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+
+</head>
+<body>
+  <div class="container">
+    <section class="content">
+      <h1>Lobby <%= @lobby.name %></h1>
+      <% if session_activated? %>
+      <p>Me: <%= current_session.username %></p>
+      <% end %>
+      <p> Other users:</p>
+      <ul>
+        <% @lobby.sessions.each do |session| %>
+          <li><%= session.username %></li>
+        <% end %>
+      </ul>
+    </section>
+
+  </div>
+</body>
