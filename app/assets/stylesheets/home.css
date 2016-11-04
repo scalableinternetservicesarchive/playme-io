@@ -1,0 +1,209 @@
+.container {
+    font-family: 'Source Sans Pro', sans-serif;
+
+    width: 700px;
+    height: 700px;
+
+    position: absolute;
+    top:-100px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    margin: auto;
+}
+
+.description {
+  margin-top:25px;
+  font-size: 2em;
+  width: 100%;
+  text-align: center;
+  display: block;
+}
+
+.img-center {
+  display: block;
+  margin: 0 auto;
+}
+
+#logo {
+  height:150px;
+  width:150px;
+}
+
+/* Input Field */
+
+*, *:after, *:before { -webkit-box-sizing: border-box; box-sizing: border-box; }
+.clearfix:before, .clearfix:after { content: ''; display: table; }
+.clearfix:after { clear: both; }
+
+.content {
+	font-size: 150%;
+	padding: 1.5em 0 0 0;
+  margin: 0 auto;
+  text-align: center;
+  overflow: hidden;
+}
+
+.input {
+	position: relative;
+	z-index: 1;
+	display: inline-block;
+	margin: 1.5em 1.5em 0.5em;
+	max-width: 460px;
+	width: calc(100% - 2em);
+	vertical-align: top;
+}
+
+.input__field {
+	position: relative;
+	display: block;
+	float: right;
+	padding: 0.8em;
+	width: 60%;
+	border: none;
+	border-radius: 0;
+	background: #f0f0f0;
+	color: #aaa;
+	font-weight: 400;
+	font-family: "Raleway", "Helvetica Neue", Helvetica, Arial, sans-serif;
+	-webkit-appearance: none; /* for box shadows to show on iOS */
+}
+
+.input__field:focus {
+	outline: none;
+}
+
+.input__label {
+	display: inline-block;
+	float: right;
+	padding: 0 1em;
+	width: 40%;
+	color: #696969;
+	font-weight: bold;
+	font-size: 70.25%;
+	-webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+.input__label-content {
+	position: relative;
+	display: block;
+	padding: 1.6em 0;
+	width: 100%;
+}
+
+.graphic {
+	position: absolute;
+	top: 0;
+	left: 0;
+	fill: none;
+}
+
+.icon {
+	color: #ddd;
+	font-size: 150%;
+}
+
+/* Individual styles */
+
+/* Yoshiko */
+.input__field--yoshiko {
+	width: 100%;
+	background-color: #d0d1d0;
+	border: 2px solid transparent;
+	-webkit-transition: background-color 0.25s, border-color 0.25s;
+	transition: background-color 0.25s, border-color 0.25s;
+}
+
+.input__label--yoshiko {
+	width: 100%;
+	text-align: left;
+	position: absolute;
+	bottom: 100%;
+	pointer-events: none;
+	overflow: hidden;
+	padding: 0 1.25em;
+	-webkit-transform: translate3d(0, 3em, 0);
+	transform: translate3d(0, 3em, 0);
+	-webkit-transition: -webkit-transform 0.25s;
+	transition: transform 0.25s ;
+	-webkit-transition-timing-function: ease-in-out;
+	transition-timing-function: ease-in-out;
+}
+
+.input__label-content--yoshiko {
+	color: #8B8C8B;
+	padding: 0.25em 0;
+	-webkit-transition: -webkit-transform 0.25s;
+	transition: transform 0.25s;
+	-webkit-transition-timing-function: ease-in-out;
+	transition-timing-function: ease-in-out;
+}
+
+.input__label-content--yoshiko::after {
+	content: attr(data-content);
+	position: absolute;
+	font-weight: 800;
+	bottom: 100%;
+	left: 0;
+	height: 100%;
+	width: 100%;
+	color: #3399FF;
+	padding: 0.25em 0;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+	font-size: 0.85em;
+}
+
+.input__field--yoshiko:focus + .input__label--yoshiko,
+.input--filled .input__label--yoshiko {
+	-webkit-transform: translate3d(0, 0, 0);
+	transform: translate3d(0, 0, 0);
+}
+
+.input__field--yoshiko:focus + .input__label--yoshiko .input__label-content--yoshiko,
+.input--filled .input__label-content--yoshiko {
+	-webkit-transform: translate3d(0, 100%, 0);
+	transform: translate3d(0, 100%, 0);
+}
+
+.input__field--yoshiko:focus + .input__field--yoshiko,
+.input--filled .input__field--yoshiko {
+	background-color: transparent;
+	border-color: #3399FF;
+}
+
+/* Button */
+.button {
+    border-radius: 4px;
+    background: #3399FF;
+    border: none;
+    float: right;
+    margin-right: 120px;
+    display: inline-block;
+    padding: 12px 20px 12px 20px;
+    color: white;
+    font-weight: 500;
+    font-size: 1.25em
+}
+
+.button:focus {
+    outline: 1px solid yellow
+}
+
+.button:hover {
+    background: #2d89e5
+}
+
+.button:active {
+    top: 1px;
+    position: relative;
+    outline: none
+}
