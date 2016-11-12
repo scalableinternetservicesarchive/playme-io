@@ -16,7 +16,7 @@ ______________________________________
 
 In a world full of web applications trying their hardest to improve productivity, playme.io does its best to do the opposite. It offers an easy way to play multiplayer games with friends, letting you share and join game lobbies with a single link. No more downloading programs, waiting for Flash to stop breaking, signing up for a site you'll never use again, or ads!
 
-WIP screenshot: ![](https://gyazo.com/5cb0aeec489f9d42dabac0ec34e119ff)
+WIP screenshot: ![gif1](https://i.gyazo.com/5cb0aeec489f9d42dabac0ec34e119ff.gif)
 
 ## Installation
 
