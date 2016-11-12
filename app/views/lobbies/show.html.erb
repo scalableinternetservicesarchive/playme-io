@@ -53,7 +53,7 @@
       </div>
     </section>
   </div>
-  <%= javascript_include_tag "faye.js" %>
+  <script type="text/javascript" src="/faye.js"></script>
   <script type="text/javascript">
     document.getElementById("roomLink").value = document.location.href;
     var client = new Faye.Client('/faye');
