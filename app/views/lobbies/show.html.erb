@@ -53,10 +53,10 @@
       </div>
     </section>
   </div>
-  <%= javascript_include_tag "http://localhost:3000/faye.js" %>
+  <%= javascript_include_tag "faye.js" %>
   <script type="text/javascript">
     document.getElementById("roomLink").value = document.location.href;
-    var client = new Faye.Client('http://localhost:3000/faye');
+    var client = new Faye.Client('/faye');
     client.publish('/0001', {
       msg: "ayy"
     });
