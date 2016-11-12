@@ -9,8 +9,8 @@
   <meta name="author" content="Andy Yu">
 
   <!-- Styles -->
-  <link rel="stylesheet" href="app/assets/stylesheets/home.css">
-  <link rel="stylesheet" href="app/assets/stylesheets/normalize.css" />
+  <%= stylesheet_link_tag "home" %>
+  <%= stylesheet_link_tag "normalize" %>
 
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300" rel="stylesheet">
@@ -23,19 +23,19 @@
       <h1>Lobby <span style= "color:#3399FF"><%= @lobby.name %></span> </h1>
       <div class="games">
           <div class="imgContainer">
-              <img src="/images/chess.png" height="64" width="64"/>
+            <%= image_tag 'chess.png', :class => "game-icons" %>
               <p>Chess</p>
           </div>
           <div class="imgContainer">
-              <img src="/images/basketball.png"/ height="64" width="64"/>
+            <%= image_tag 'basketball.png', :class => "game-icons" %>
               <p>Basketball</p>
           </div>
           <div class="imgContainer">
-               <img src="/images/tank.png"/ height="64" width="64"/>
+            <%= image_tag 'tank.png', :class => "game-icons" %>
               <p>Tanks</p>
           </div>
           <div class="imgContainer">
-               <img src="/images/palette.png"/ height="64" width="64"/>
+            <%= image_tag 'palette.png', :class => "game-icons" %>
               <p>Pictionary</p>
           </div>
       </div>
@@ -53,9 +53,16 @@
       </div>
     </section>
   </div>
+  <%= javascript_include_tag "http://localhost:3000/faye.js" %>
   <script type="text/javascript">
     document.getElementById("roomLink").value = document.location.href;
-
+    var client = new Faye.Client('http://localhost:3000/faye');
+    client.publish('/0001', {
+      msg: "ayy"
+    });
+    client.subscribe('/0001', function(data){
+      console.log(data);
+    })
   </script>
 </body>
 </html>

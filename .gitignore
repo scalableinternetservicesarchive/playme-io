@@ -61,3 +61,5 @@ bower.json
 
 # Mac
 .DS_Store
+
+public/assets/
