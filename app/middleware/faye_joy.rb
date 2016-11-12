@@ -1,4 +1,4 @@
-# This is an example Faye extension that simply tacks on 
+# This is an example Faye extension that simply tacks on
 # a key/value to all messages sent to channel /0001
 # This class is enabled in config/application.rb
 
@@ -24,5 +24,8 @@ class FayeJoy
 
   def add_joy!(message)
     message['data']['FayeJoy'] = "Here's some joy from an extension!"
+    if message['data']['msg'] == "fuck"
+      message['data']['msg'] = "censored"
+    end
   end
 end

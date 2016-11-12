@@ -16,6 +16,9 @@
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
 
+  <!-- jQuery -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
 </head>
 <body>
   <div class="container">
@@ -39,6 +42,16 @@
               <p>Pictionary</p>
           </div>
       </div>
+      <div class="chat_room">
+        <div id="chat_box">
+          <p class="alert"> Welcome to the chat room <%= @lobby.name %>! </p>
+        </div>
+
+        <form id="message_form">
+          <input type="text" id="message" name="message">
+          <input type="submit" value="Send">
+        </form>
+      </div>
       <div>
         <% if session_activated? %>
         <p>Me: <%= current_session.username %></p>
@@ -55,14 +68,26 @@
   </div>
   <script type="text/javascript" src="/faye.js"></script>
   <script type="text/javascript">
-    document.getElementById("roomLink").value = document.location.href;
+    document.getElementById("roomLink").value = document.location.href; // automatically adds lobby url to text box
     var client = new Faye.Client('/faye');
-    client.publish('/0001', {
-      msg: "ayy"
-    });
     client.subscribe('/0001', function(data){
-      console.log(data);
-    })
+      var message = document.createElement("p");
+      message.innerHTML = data['msg']
+      $('#chat_box').append(message)
+    });
+    $('#message_form').submit(function(){
+      // Publish the message to the public channel
+      client.publish('/0001', {
+        username: '<%= @lobby.name %>',
+        msg: $('#message').val()
+      });
+
+      // Clear the message box
+      $('#message').val('');
+
+      // Don't actually submit the form, otherwise the page will refresh.
+      return false;
+    });
   </script>
 </body>
 </html>
