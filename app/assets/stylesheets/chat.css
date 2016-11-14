@@ -27,7 +27,7 @@
 #message_form {
   position: absolute;
   bottom: 0;
-  margin: 5% 5% 5% 5%;
+  margin: 5% 5% 5% 6%;
 }
 
 textarea:focus, input:focus{
@@ -35,7 +35,7 @@ textarea:focus, input:focus{
 }
 
 #message_box {
-  width: 75%;
+  width: 72%;
   padding: 7px 12px 7px 12px;
   font: 13px "Lucida Sans Unicode", "Lucida Grande", sans-serif;
 }
@@ -48,8 +48,9 @@ textarea:focus, input:focus{
   padding: 8px 12px 8px 12px;
   color: white;
   font-weight: 500;
-  font-size: 1em
+  font-size: 1em;
   width: 25%;
+  margin: 1px 0 0 0;
 }
 
 #send_button:hover {
