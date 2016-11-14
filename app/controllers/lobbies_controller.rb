@@ -51,6 +51,15 @@ class LobbiesController < ApplicationController
     activate_session session
   end
 
+  def players_json
+    players_hash = {}
+    @lobby.sessions.each do |session|
+      players_hash[session.id] = session.username
+    end
+    return players_hash.to_json
+  end
+  helper_method :players_json
+
   private
 
   def lobby_params

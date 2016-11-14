@@ -42,17 +42,6 @@
               <p>Pictionary</p>
           </div>
       </div>
-      <div class="chat_room">
-        <div id="chat_box">
-          <p class="alert"> Welcome to the chat room <%= @lobby.name %>! </p>
-        </div>
-
-        <form id="message_form">
-          <input type="text" id="message" name="message">
-          <input type="submit" value="Send">
-        </form>
-      </div>
-      <div>
         <% if session_activated? %>
         <p>Me: <%= current_session.username %></p>
         <% end %>
@@ -66,28 +55,37 @@
       </div>
     </section>
   </div>
+  <div class = "users" style="position: fixed; top: 0px; left:0px;">
+    <form id = "my_name">
+      <input id="name" type="text" name="name" />
+    </form>
+    <ul id="others">
+    </ul>
+  </div>
+  <div class="chat_room">
+    <div class="chat_header">
+      <h1> Chat </h1>
+    </div>
+
+    <div id="chat_box">
+      <p class="message"> Welcome to the chat room <%= @lobby.name %>! </p>
+    </div>
+
+    <form id="message_form">
+      <input id="message_box" type="text" name="message">
+      <input id="send_button" type="submit" value="Send">
+    </form>
+  </div>
   <script type="text/javascript" src="/faye.js"></script>
+  <%= javascript_include_tag "chat.js" %>
   <script type="text/javascript">
-    document.getElementById("roomLink").value = document.location.href; // automatically adds lobby url to text box
+    // document.getElementById("roomLink").value = document.location.href; // automatically adds lobby url to text box
     var client = new Faye.Client('/faye');
-    client.subscribe('/0001', function(data){
-      var message = document.createElement("p");
-      message.innerHTML = data['msg']
-      $('#chat_box').append(message)
-    });
-    $('#message_form').submit(function(){
-      // Publish the message to the public channel
-      client.publish('/0001', {
-        username: '<%= @lobby.name %>',
-        msg: $('#message').val()
-      });
-
-      // Clear the message box
-      $('#message').val('');
-
-      // Don't actually submit the form, otherwise the page will refresh.
-      return false;
-    });
+    var players = JSON.parse('<%= players_json.html_safe %>');
+    console.log("players", players);
+    var data = {"lobbyName": "<%= @lobby.name %>", "players": players, "userId": <%= current_session.id %>, "username": "<%= current_session.username %>"};
+    var meta = new Meta(client, data);
+    var lobbyChat = new Chat("<%= @lobby.name %>", meta,  client);
   </script>
 </body>
 </html>
