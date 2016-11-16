@@ -51,3 +51,4 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'json'
 gem 'faye', '1.2.2'
 gem 'thin'
+gem 'eventmachine'

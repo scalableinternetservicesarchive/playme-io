@@ -23,6 +23,9 @@ var Meta = function(fayeClient, data) {
       case "player_join":
         self.onPlayerJoin(data.userId, data.value);
         break;
+      case "player_leave":
+        self.onPlayerLeave(data.userId);
+        break;
     }
   }
 
@@ -36,6 +39,12 @@ var Meta = function(fayeClient, data) {
   this.onPlayerJoin = function(userId, value) {
     self.players[userId] = value;
     console.log("player joined", self.players);
+    self.updatePlayerList();
+  }
+
+  this.onPlayerLeave = function(userId) {
+    delete self.players[userId];
+    console.log("player left", self.players);
     self.updatePlayerList();
   }
 

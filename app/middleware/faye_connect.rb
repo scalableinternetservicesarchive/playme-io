@@ -7,7 +7,6 @@ class FayeConnect
     # Let non-subscribe messages through
 
     if meta_update?(message)
-      print "ayyyyyyyyyy"
       update_db!(message)
     end
 
@@ -23,16 +22,22 @@ class FayeConnect
     action_type = message['data']['action']
     print action_type
     if action_type == "name_change"
-      print "hello"
       session_id = message['data']['userId']
       new_username = message['data']['value']
-      print session_id.class
       session = Session.find(session_id)
-      print session_id
       if session
         session.username = new_username
         session.save
       end
     end
+    if action_type == "player_join"
+      session_id = message['data']['userId']
+      session = Session.find(session_id)
+      if session
+        session.faye_client_id = message['clientId']
+        session.save
+      end
+    end
   end
+  
 end
