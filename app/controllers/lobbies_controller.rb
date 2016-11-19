@@ -1,3 +1,5 @@
+require 'json'
+
 class LobbiesController < ApplicationController
   def index
     @lobbies = Lobby.all
@@ -28,6 +30,16 @@ class LobbiesController < ApplicationController
     end
   end
 
+  def status
+    @lobby = Lobby.find_by(name: params[:lobby_id])
+    print params
+    if @lobby.nil?
+      raise ActiveRecord::RecordNotFound
+    end
+    lobby_hash = {:name => @lobby.name, :sessions => @lobby.sessions}
+    render :json => lobby_hash
+  end
+
   def destroy
     deactivate_session
     redirect_to root_url
@@ -39,11 +51,20 @@ class LobbiesController < ApplicationController
     activate_session session
   end
 
+  def players_json
+    players_hash = {}
+    @lobby.sessions.each do |session|
+      players_hash[session.id] = session.username
+    end
+    return players_hash.to_json
+  end
+  helper_method :players_json
 
   private
 
   def lobby_params
     params.require(:lobby).permit(:name)
   end
+
 
 end

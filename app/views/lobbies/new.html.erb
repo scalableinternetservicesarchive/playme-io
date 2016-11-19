@@ -20,7 +20,7 @@
 
 <body>
   <div class="container">
-    <img class="img-center" id="logo" src="/images/teamwork.png"/>
+    <%= image_tag 'teamwork.png', :id => "logo", :class => "img-center" %>
     <span class="description" align="center"> Fast multiplayer games with friends </span>
     <section class="content">
       <%= form_for(@lobby) do |f| %>

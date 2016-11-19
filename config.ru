@@ -2,4 +2,5 @@
 
 require_relative 'config/environment'
 
+Faye::WebSocket.load_adapter('thin')
 run Rails.application

@@ -5,7 +5,7 @@
   height: 700px;
 
   position: absolute;
-  top:0px;
+  top: 0px;
   bottom: 0;
   left: 0;
   right: 0;
@@ -23,6 +23,11 @@
   margin-left:120px;
   float: left;
   width: 100%;
+}
+
+.game-icons{
+  width: 64px;
+  height: 64px;
 }
 
 .description {

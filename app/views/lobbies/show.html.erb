@@ -9,12 +9,15 @@
   <meta name="author" content="Andy Yu">
 
   <!-- Styles -->
-  <link rel="stylesheet" href="app/assets/stylesheets/home.css">
-  <link rel="stylesheet" href="app/assets/stylesheets/normalize.css" />
+  <%= stylesheet_link_tag "home" %>
+  <%= stylesheet_link_tag "normalize" %>
 
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+
+  <!-- jQuery -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 
 </head>
 <body>
@@ -23,23 +26,22 @@
       <h1>Lobby <span style= "color:#3399FF"><%= @lobby.name %></span> </h1>
       <div class="games">
           <div class="imgContainer">
-              <img src="/images/chess.png" height="64" width="64"/>
+            <%= image_tag 'chess.png', :class => "game-icons" %>
               <p>Chess</p>
           </div>
           <div class="imgContainer">
-              <img src="/images/basketball.png"/ height="64" width="64"/>
+            <%= image_tag 'basketball.png', :class => "game-icons" %>
               <p>Basketball</p>
           </div>
           <div class="imgContainer">
-               <img src="/images/tank.png"/ height="64" width="64"/>
+            <%= image_tag 'tank.png', :class => "game-icons" %>
               <p>Tanks</p>
           </div>
           <div class="imgContainer">
-               <img src="/images/palette.png"/ height="64" width="64"/>
+            <%= image_tag 'palette.png', :class => "game-icons" %>
               <p>Pictionary</p>
           </div>
       </div>
-      <div>
         <% if session_activated? %>
         <p>Me: <%= current_session.username %></p>
         <% end %>
@@ -53,9 +55,37 @@
       </div>
     </section>
   </div>
-  <script type="text/javascript">
-    document.getElementById("roomLink").value = document.location.href;
+  <div class = "users" style="position: fixed; top: 0px; left:0px;">
+    <form id = "my_name">
+      <input id="name" type="text" name="name" />
+    </form>
+    <ul id="others">
+    </ul>
+  </div>
+  <div class="chat_room">
+    <div class="chat_header">
+      <h1> Chat </h1>
+    </div>
 
+    <div id="chat_box">
+      <p class="message"> Welcome to the chat room <%= @lobby.name %>! </p>
+    </div>
+
+    <form id="message_form">
+      <input id="message_box" type="text" name="message">
+      <input id="send_button" type="submit" value="Send">
+    </form>
+  </div>
+  <script type="text/javascript" src="/faye.js"></script>
+  <%= javascript_include_tag "chat.js" %>
+  <script type="text/javascript">
+    // document.getElementById("roomLink").value = document.location.href; // automatically adds lobby url to text box
+    var client = new Faye.Client('/faye');
+    var players = JSON.parse('<%= players_json.html_safe %>');
+    console.log("players", players);
+    var data = {"lobbyName": "<%= @lobby.name %>", "players": players, "userId": <%= current_session.id %>, "username": "<%= current_session.username %>"};
+    var meta = new Meta(client, data);
+    var lobbyChat = new Chat("<%= @lobby.name %>", meta,  client);
   </script>
 </body>
 </html>
