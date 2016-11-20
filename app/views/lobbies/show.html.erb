@@ -55,8 +55,9 @@
       </div>
     </section>
   </div>
-  <div class = "users" style="position: fixed; top: 0px; left:0px;">
-    <form id = "my_name">
+  <canvas id="gameCanvas" width="720" height="480"></canvas>
+  <div class="users" style="position: fixed; top: 0px; left:0px;">
+    <form id="my_name">
       <input id="name" type="text" name="name" />
     </form>
     <ul id="others">
@@ -77,7 +78,6 @@
     </form>
   </div>
   <script type="text/javascript" src="/faye.js"></script>
-  <%= javascript_include_tag "chat.js" %>
   <script type="text/javascript">
     // document.getElementById("roomLink").value = document.location.href; // automatically adds lobby url to text box
     var client = new Faye.Client('/faye');
