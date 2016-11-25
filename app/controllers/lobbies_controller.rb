@@ -75,7 +75,7 @@ class LobbiesController < ApplicationController
     @lobby.sessions.each do |session|
       indices.push session.player_index
     end
-    for i in 1..4 do
+    for i in 0..3 do
       return i unless indices.include?(i)
     end
     return -1

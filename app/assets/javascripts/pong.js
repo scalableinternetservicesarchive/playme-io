@@ -1,9 +1,18 @@
-var PongGame = function(myIndex, numPlayers, boardRadius, boardColor, canvas, ctx, meta, client) {
+var LEFT_KEY = 37,
+    UP_KEY = 38,
+    RIGHT_KEY = 39,
+    DOWN_KEY = 40;
+
+var PongGame = function(numPlayers, boardRadius, boardColor, canvas, ctx, meta, client) {
   var self = this;
 
-  this.init = function(myIndex, numPlayers, boardRadius, boardColor, canvas, ctx, meta, client) {
+  this.init = function(numPlayers, boardRadius, boardColor, canvas, ctx, meta, client) {
     self.ctx = ctx;
     self.meta = meta;
+    self.index = self.meta.playerIndex;
+
+    console.log(self.index); // DEBUG REMOVE LATER
+
     self.fayeClient = client;
     self.gameChannel = "/" + self.meta.lobbyName + "/game";
     self.fayeClient.subscribe(self.gameChannel, self.onMessage);
@@ -12,7 +21,6 @@ var PongGame = function(myIndex, numPlayers, boardRadius, boardColor, canvas, ct
     self.boardRadius = boardRadius;
     self.centerX = canvas.width/2;
     self.centerY = canvas.height/2;
-    self.index = myIndex;
 
       // paddle properties
     self.paddle_width = 20;
@@ -25,20 +33,59 @@ var PongGame = function(myIndex, numPlayers, boardRadius, boardColor, canvas, ct
     start_color_index = Math.random()*self.colors.length;
     for(var i = 0; i < numPlayers; i++) {
       color_index = parseInt(start_color_index);
-      self.paddles.push(new Paddle(i, self.colors[color_index], bound_width, self.paddle_width*2, self.centerX, self.centerY,
+      self.paddles.push(new Paddle(i, self.colors[color_index], bound_width/4, self.paddle_width*2, self.centerX, self.centerY,
                               self.boardRadius, start_rad, start_rad + bound_width, self.ctx));
       start_rad += bound_width;
       start_color_index = (start_color_index + 1) % self.colors.length;
     }
-    self.paddles[1].width = bound_width/4;
 
     self.ball = new Ball("#34495E", 10, self.centerX, self.centerY, self.ctx);
   }
 
   // Faye
   this.onMessage = function(data) {
-
+    switch(data.action){
+      case "keyPress":
+        self.onReceiveKeyPress(data.value);
+        break;
+      case "gameStateUpdate":
+        break;
+    }
   }
+
+  this.sendKeyPress = function(keyCode, keyState) {
+    self.fayeClient.publish(self.gameChannel, {
+      "action": "keyPress",
+      "value": {
+        "playerIndex": self.meta.playerIndex,
+        "keyCode": keyCode,
+        "keyState": keyState
+      }
+    });
+  }
+
+  this.onReceiveKeyPress = function(value) {
+    var playerIndex = value.playerIndex;
+    if(playerIndex !== self.index) {
+      if(value.keyCode == LEFT_KEY) {
+        if(value.keyState == "down") {
+          self.paddles[playerIndex].cw = true;
+        }
+        else if(value.keyState == "up") {
+          self.paddles[playerIndex].cw = false;
+        }
+      }
+      else if(value.keyCode == RIGHT_KEY) {
+        if(value.keyState == "down") {
+          self.paddles[playerIndex].ccw = true;
+        }
+        else if(value.keyState == "up") {
+          self.paddles[playerIndex].ccw = false;
+        }
+      }
+    }
+  }
+
 
   this.draw = function() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -107,24 +154,28 @@ var PongGame = function(myIndex, numPlayers, boardRadius, boardColor, canvas, ct
   }
 
   this.keyDownHandler = function(e) {
-    if(e.keyCode == 37) {
+    if(e.keyCode == LEFT_KEY) {
       self.paddles[self.index].cw = true;
+      self.sendKeyPress(LEFT_KEY, "down")
     }
-    else if(e.keyCode == 39) {
+    else if(e.keyCode == RIGHT_KEY) {
       self.paddles[self.index].ccw = true;
+      self.sendKeyPress(RIGHT_KEY, "down")
     }
   }
 
   this.keyUpHandler = function(e) {
     if(e.keyCode == 37) {
       self.paddles[self.index].cw = false;
+      self.sendKeyPress(LEFT_KEY, "up")
     }
     else if(e.keyCode == 39) {
       self.paddles[self.index].ccw = false;
+      self.sendKeyPress(RIGHT_KEY, "up")
     }
   }
 
-  self.init(myIndex, numPlayers, boardRadius, boardColor, canvas, ctx, meta, client);
+  self.init(numPlayers, boardRadius, boardColor, canvas, ctx, meta, client);
 }
 
 var Paddle = function(index, color, width, height, centerX, centerY, radius, startBound, endBound, ctx) {

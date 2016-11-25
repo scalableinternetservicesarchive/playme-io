@@ -69,7 +69,6 @@ var Meta = function(fayeClient, data) {
       }
     }
   }
-
   this.init(fayeClient, data);
 };
 

@@ -92,7 +92,8 @@
     //game
     var canvas = document.getElementById("gameCanvas");
     var ctx = canvas.getContext("2d");
-    var game = new PongGame(1, 3, 225, "#eee", canvas, ctx, meta, client);
+    console.log(players.length);
+    var game = new PongGame(Object.keys(players).length, 225, "#eee", canvas, ctx, meta, client);
 
   </script>
 </body>
