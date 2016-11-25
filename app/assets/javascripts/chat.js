@@ -60,11 +60,25 @@ var Meta = function(fayeClient, data) {
   this.updatePlayerList = function() {
     var list = document.getElementById("others");
     list.innerHTML = "";
+    count = 0;
+
+    var titlerow = document.createElement("div");
+    titlerow.className += " titlerow";
+    titlerow.innerHTML = "Lobby Players";
+    list.appendChild(titlerow);
+
     for (id in self.players) {
       if (id !== self.userId) {
-        var li = document.createElement("li");
-        li.innerHTML = id + ": " + self.players[id];
-        list.appendChild(li);
+        count += 1;
+        var new_row = document.createElement("div");
+        if (count == 1 || count == 3) {
+          new_row.className += " leftuser";
+        }
+        if (count == 2 || count == 4) {
+          new_row.className += " rightuser";
+        }
+        new_row.innerHTML = "Player: " + (self.players[id]).bold();
+        list.appendChild(new_row);
       }
     }
   }
