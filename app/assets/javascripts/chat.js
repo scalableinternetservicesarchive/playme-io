@@ -5,12 +5,13 @@ var Meta = function(fayeClient, data) {
     self.lobbyName = data.lobbyName;
     self.userId = data.userId;
     self.username = data.username;
+    self.playerIndex = data.playerIndex;
     self.fayeClient = fayeClient;
     self.metaChannel = "/" + this.lobbyName + "/meta";
     self.fayeClient.subscribe(this.metaChannel, this.onChange);
     // other props
-    self.players = data.players
-    self.sendChange("player_join", this.username);
+    self.players = data.players;
+    self.sendChange("player_join", self.players[self.userId]);
     self.updatePlayerList();
   }
 
@@ -30,7 +31,7 @@ var Meta = function(fayeClient, data) {
   }
 
   this.onNameChange = function(userId, value) {
-    self.players[userId] = value;
+    self.players[userId]["username"] = value;
     console.log(self);
     console.log("player name changed", userId, value, this.players);
     self.updatePlayerList();
@@ -63,7 +64,7 @@ var Meta = function(fayeClient, data) {
     for (id in self.players) {
       if (id !== self.userId) {
         var li = document.createElement("li");
-        li.innerHTML = id + ": " + self.players[id];
+        li.innerHTML = id + ": " + self.players[id]["username"];
         list.appendChild(li);
       }
     }
@@ -74,9 +75,9 @@ var Meta = function(fayeClient, data) {
 
 
 
-var Chat = function(lobbyName, meta, fayeClient) {
-  this.lobbyName = lobbyName;
+var Chat = function(meta, fayeClient) {
   this.meta = meta;
+  this.lobbyName = this.meta.lobbyName;
   this.fayeClient = fayeClient;
   this.chatChannel = "/" + this.lobbyName + "/chat";
   this.fayeClient.subscribe(this.chatChannel, this.onMessage);

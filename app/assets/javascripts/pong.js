@@ -1,8 +1,13 @@
-var PongGame = function(myIndex, numPlayers, boardRadius, boardColor, canvas, ctx) {
+var PongGame = function(myIndex, numPlayers, boardRadius, boardColor, canvas, ctx, meta, client) {
   var self = this;
 
-  this.init = function(myIndex, numPlayers, boardRadius, boardColor, canvas, ctx) {
+  this.init = function(myIndex, numPlayers, boardRadius, boardColor, canvas, ctx, meta, client) {
     self.ctx = ctx;
+    self.meta = meta;
+    self.fayeClient = client;
+    self.gameChannel = "/" + self.meta.lobbyName + "/game";
+    self.fayeClient.subscribe(self.gameChannel, self.onMessage);
+
     self.boardColor = boardColor;
     self.boardRadius = boardRadius;
     self.centerX = canvas.width/2;
@@ -28,6 +33,11 @@ var PongGame = function(myIndex, numPlayers, boardRadius, boardColor, canvas, ct
     self.paddles[1].width = bound_width/4;
 
     self.ball = new Ball("#34495E", 10, self.centerX, self.centerY, self.ctx);
+  }
+
+  // Faye
+  this.onMessage = function(data) {
+
   }
 
   this.draw = function() {
@@ -114,7 +124,7 @@ var PongGame = function(myIndex, numPlayers, boardRadius, boardColor, canvas, ct
     }
   }
 
-  self.init(myIndex, numPlayers, boardRadius, boardColor, canvas, ctx);
+  self.init(myIndex, numPlayers, boardRadius, boardColor, canvas, ctx, meta, client);
 }
 
 var Paddle = function(index, color, width, height, centerX, centerY, radius, startBound, endBound, ctx) {
@@ -193,10 +203,10 @@ var Ball = function(color, radius, initX, initY, ctx) {
 }
 
 $(document).on('turbolinks:load', function() {
-  var canvas = document.getElementById("gameCanvas");
-  var ctx = canvas.getContext("2d");
-
-  var game = new PongGame(1, 3, 225, "#eee", canvas, ctx);
+  // var canvas = document.getElementById("gameCanvas");
+  // var ctx = canvas.getContext("2d");
+  //
+  // var game = new PongGame(1, 3, 225, "#eee", canvas, ctx);
 
   document.addEventListener("keydown", game.keyDownHandler, false);
   document.addEventListener("keyup", game.keyUpHandler, false);
