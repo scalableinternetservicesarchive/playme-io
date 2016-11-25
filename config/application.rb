@@ -20,6 +20,7 @@ module PlaymeIo
       end
     end
 
+    # server-side publish to all clients subscribed to channel
     def broadcast(channel, msg, bayeux)
       EM.run {
         bayeux.get_client.publish(channel, msg)

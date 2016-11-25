@@ -55,8 +55,9 @@
       </div>
     </section>
   </div>
-  <div class = "users" style="position: fixed; top: 0px; left:0px;">
-    <form id = "my_name">
+  <canvas id="gameCanvas" width="720" height="480"></canvas>
+  <div class="users" style="position: fixed; top: 0px; left:0px;">
+    <form id="my_name">
       <input id="name" type="text" name="name" />
     </form>
     <ul id="others">
@@ -77,15 +78,23 @@
     </form>
   </div>
   <script type="text/javascript" src="/faye.js"></script>
-  <%= javascript_include_tag "chat.js" %>
   <script type="text/javascript">
     // document.getElementById("roomLink").value = document.location.href; // automatically adds lobby url to text box
+    // lobby meta data
     var client = new Faye.Client('/faye');
     var players = JSON.parse('<%= players_json.html_safe %>');
-    console.log("players", players);
-    var data = {"lobbyName": "<%= @lobby.name %>", "players": players, "userId": <%= current_session.id %>, "username": "<%= current_session.username %>"};
+    var data = {"lobbyName": "<%= @lobby.name %>", "players": players, "userId": <%= current_session.id %>, "username": "<%= current_session.username %>", "playerIndex": <%= current_session.player_index %>};
     var meta = new Meta(client, data);
-    var lobbyChat = new Chat("<%= @lobby.name %>", meta,  client);
+
+    // chat
+    var lobbyChat = new Chat(meta,  client);
+
+    //game
+    var canvas = document.getElementById("gameCanvas");
+    var ctx = canvas.getContext("2d");
+    console.log(players.length);
+    var game = new PongGame(Object.keys(players).length, 225, "#eee", canvas, ctx, meta, client);
+
   </script>
 </body>
 </html>

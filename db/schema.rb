@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161115025454) do
+ActiveRecord::Schema.define(version: 20161125200329) do
 
   create_table "lobbies", force: :cascade do |t|
     t.string   "name"
@@ -25,6 +25,7 @@ ActiveRecord::Schema.define(version: 20161115025454) do
     t.integer  "lobby_id"
     t.string   "username"
     t.string   "faye_client_id"
+    t.integer  "player_index"
     t.index ["faye_client_id"], name: "index_sessions_on_faye_client_id"
     t.index ["lobby_id"], name: "index_sessions_on_lobby_id"
   end

@@ -47,6 +47,12 @@ class LobbiesController < ApplicationController
 
   def create_session
     session = @lobby.sessions.build
+    player_index = get_next_player_index
+    if player_index == -1
+      # if lobby has 4 players already, raise error
+      raise ActiveRecord::RecordNotFound
+    end
+    session.player_index = player_index
     session.save
     activate_session session
   end
@@ -54,13 +60,26 @@ class LobbiesController < ApplicationController
   def players_json
     players_hash = {}
     @lobby.sessions.each do |session|
-      players_hash[session.id] = session.username
+      players_hash[session.id] = {}
+      players_hash[session.id]["username"] = session.username
+      players_hash[session.id]["playerIndex"] = session.player_index
     end
     return players_hash.to_json
   end
   helper_method :players_json
 
   private
+
+  def get_next_player_index
+    indices = []
+    @lobby.sessions.each do |session|
+      indices.push session.player_index
+    end
+    for i in 0..3 do
+      return i unless indices.include?(i)
+    end
+    return -1
+  end
 
   def lobby_params
     params.require(:lobby).permit(:name)
