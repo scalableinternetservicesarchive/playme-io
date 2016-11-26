@@ -20,24 +20,22 @@ class FayeConnect
 
   def update_db!(message)
     action_type = message['data']['action']
-    print action_type
-    if action_type == "name_change"
-      session_id = message['data']['userId']
-      new_username = message['data']['value']
-      session = Session.find(session_id)
-      if session
+    session_id = message['data']['userId']
+    session = Session.find_by(id: session_id)
+    if session
+      if action_type == "name_change"
+        new_username = message['data']['value']
         session.username = new_username
-        session.save
       end
-    end
-    if action_type == "player_join"
-      session_id = message['data']['userId']
-      session = Session.find(session_id)
-      if session
+      if action_type == "player_join"
         session.faye_client_id = message['clientId']
-        session.save
       end
+      if action_type == "state_change"
+        new_state = message['data']['value']
+        session.readystate = new_state
+      end
+      session.save
     end
   end
-  
+
 end

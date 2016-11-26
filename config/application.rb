@@ -30,11 +30,24 @@ module PlaymeIo
     def on_disconnect(client_id, bayeux)
       session = Session.find_by(faye_client_id: client_id)
       if session
+        session_id = session.id
+          # delete session
         lobby = Lobby.find session.lobby_id
         message_data = {action: "player_leave", userId: session.id, value:session.id}
         meta_channel = "/#{lobby.name}/meta"
         session.destroy
         broadcast(meta_channel, message_data, bayeux)
+
+        if(lobby.leader_id == session_id)  # disconnected user was leader
+          if !(lobby.sessions.empty?)
+            lobby.leader_id = lobby.sessions[0].id # assign next user as leader
+            lobby.save
+            message_data = {action: "leader_change", userId: lobby.leader_id, value:lobby.leader_id}
+            broadcast(meta_channel, message_data, bayeux)
+          else
+            lobby.destroy
+          end
+        end
       end
     end
 

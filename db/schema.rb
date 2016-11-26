@@ -10,12 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161125200329) do
+ActiveRecord::Schema.define(version: 20161126011953) do
 
   create_table "lobbies", force: :cascade do |t|
     t.string   "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer  "state"
+    t.integer  "leader_id"
     t.index ["name"], name: "index_lobbies_on_name"
   end
 
@@ -26,6 +28,7 @@ ActiveRecord::Schema.define(version: 20161125200329) do
     t.string   "username"
     t.string   "faye_client_id"
     t.integer  "player_index"
+    t.integer  "readystate"
     t.index ["faye_client_id"], name: "index_sessions_on_faye_client_id"
     t.index ["lobby_id"], name: "index_sessions_on_lobby_id"
   end

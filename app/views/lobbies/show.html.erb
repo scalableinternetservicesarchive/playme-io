@@ -55,6 +55,7 @@
       </div>
     </section>
   </div>
+  <button id="readyButton" style="top:200px; position:relative" value="ready"> I m redy! </button>
   <canvas id="gameCanvas" width="720" height="480"></canvas>
   <div class="users" style="position: fixed; top: 0px; left:0px;">
     <form id="my_name">
@@ -83,7 +84,8 @@
     // lobby meta data
     var client = new Faye.Client('/faye');
     var players = JSON.parse('<%= players_json.html_safe %>');
-    var data = {"lobbyName": "<%= @lobby.name %>", "players": players, "userId": <%= current_session.id %>, "username": "<%= current_session.username %>", "playerIndex": <%= current_session.player_index %>};
+    var data = {"lobbyName": "<%= @lobby.name %>", "leaderId": <%= @lobby.leader_id %>, "players": players, "userId": <%= current_session.id %>,
+                "username": "<%= current_session.username %>", "playerIndex": <%= current_session.player_index %>};
     var meta = new Meta(client, data);
 
     // chat
@@ -92,8 +94,6 @@
     //game
     var canvas = document.getElementById("gameCanvas");
     var ctx = canvas.getContext("2d");
-    console.log(players.length);
-    var game = new PongGame(Object.keys(players).length, 225, "#eee", canvas, ctx, meta, client);
 
   </script>
 </body>
