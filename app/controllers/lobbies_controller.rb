@@ -9,6 +9,7 @@ class LobbiesController < ApplicationController
   end
   def create
     @lobby = Lobby.new(lobby_params)
+    @lobby.state = "in_lobby"
     if @lobby.save
       redirect_to action: "show",id:@lobby.name
     else
@@ -53,8 +54,14 @@ class LobbiesController < ApplicationController
       raise ActiveRecord::RecordNotFound
     end
     session.player_index = player_index
+    session.readystate = "not_ready"
     session.save
     activate_session session
+    # assign first player to be the leader of the lobby
+    if @lobby.leader_id.nil?
+      @lobby.leader_id = session.id
+      @lobby.save
+    end
   end
 
   def players_json
@@ -62,6 +69,7 @@ class LobbiesController < ApplicationController
     @lobby.sessions.each do |session|
       players_hash[session.id] = {}
       players_hash[session.id]["username"] = session.username
+      players_hash[session.id]["readystate"] = session.readystate
       players_hash[session.id]["playerIndex"] = session.player_index
     end
     return players_hash.to_json

@@ -1,79 +1,3 @@
-var Meta = function(fayeClient, data) {
-  var self = this;
-
-  this.init = function(fayeClient, data) {
-    self.lobbyName = data.lobbyName;
-    self.userId = data.userId;
-    self.username = data.username;
-    self.playerIndex = data.playerIndex;
-    self.fayeClient = fayeClient;
-    self.metaChannel = "/" + this.lobbyName + "/meta";
-    self.fayeClient.subscribe(this.metaChannel, this.onChange);
-    // other props
-    self.players = data.players;
-    self.sendChange("player_join", self.players[self.userId]);
-    self.updatePlayerList();
-  }
-
-  this.onChange = function(data) {
-    console.log("on change fired", data);
-    switch(data.action){
-      case "name_change":
-        self.onNameChange(data.userId, data.value);
-        break;
-      case "player_join":
-        self.onPlayerJoin(data.userId, data.value);
-        break;
-      case "player_leave":
-        self.onPlayerLeave(data.userId);
-        break;
-    }
-  }
-
-  this.onNameChange = function(userId, value) {
-    self.players[userId]["username"] = value;
-    console.log(self);
-    console.log("player name changed", userId, value, this.players);
-    self.updatePlayerList();
-  }
-
-  this.onPlayerJoin = function(userId, value) {
-    self.players[userId] = value;
-    console.log("player joined", self.players);
-    self.updatePlayerList();
-  }
-
-  this.onPlayerLeave = function(userId) {
-    delete self.players[userId];
-    console.log("player left", self.players);
-    self.updatePlayerList();
-  }
-
-  this.sendChange = function(action, value) {
-    console.log('sent change', action, value);
-    self.fayeClient.publish(this.metaChannel, {
-      action: action,
-      userId: this.userId,
-      value: value
-    });
-  }
-
-  this.updatePlayerList = function() {
-    var list = document.getElementById("others");
-    list.innerHTML = "";
-    for (id in self.players) {
-      if (id !== self.userId) {
-        var li = document.createElement("li");
-        li.innerHTML = id + ": " + self.players[id]["username"];
-        list.appendChild(li);
-      }
-    }
-  }
-  this.init(fayeClient, data);
-};
-
-
-
 var Chat = function(meta, fayeClient) {
   this.meta = meta;
   this.lobbyName = this.meta.lobbyName;
@@ -107,16 +31,6 @@ $(document).on('turbolinks:load', function() {
 
     // Don't actually submit the form, otherwise the page will refresh.
     return false;
-  });
-  $("form#my_name").submit(function(e){
-    e.preventDefault();
-    e.stopImmediatePropagation();
-    var val = $("#my_name #name").val();
-    meta.sendChange("name_change", val);
-  });
-  $("#my_name #name").blur(function(){
-    console.log('ayy');
-    $("#my_name").submit();
   });
 });
 

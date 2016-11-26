@@ -3,6 +3,8 @@ class Session < ApplicationRecord
 
   after_create :set_username
 
+  enum readystate: [ :not_ready, :ready]
+
   def set_username
     default_username = "user#{id}"
     self.update_columns(username: default_username) if username.nil?

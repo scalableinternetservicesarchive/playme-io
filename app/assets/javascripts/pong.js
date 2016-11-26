@@ -10,9 +10,6 @@ var PongGame = function(numPlayers, boardRadius, boardColor, canvas, ctx, meta, 
     self.ctx = ctx;
     self.meta = meta;
     self.index = self.meta.playerIndex;
-
-    console.log(self.index); // DEBUG REMOVE LATER
-
     self.fayeClient = client;
     self.gameChannel = "/" + self.meta.lobbyName + "/game";
     self.fayeClient.subscribe(self.gameChannel, self.onMessage);
@@ -41,6 +38,13 @@ var PongGame = function(numPlayers, boardRadius, boardColor, canvas, ctx, meta, 
 
     self.ball = new Ball("#34495E", 10, self.centerX, self.centerY, self.ctx);
   }
+
+  this.startGame = function() {
+    document.addEventListener("keydown", self.keyDownHandler, false);
+    document.addEventListener("keyup", self.keyUpHandler, false);
+    setInterval(self.draw, 10);
+  }
+
 
   // Faye
   this.onMessage = function(data) {
@@ -85,7 +89,6 @@ var PongGame = function(numPlayers, boardRadius, boardColor, canvas, ctx, meta, 
       }
     }
   }
-
 
   this.draw = function() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -252,14 +255,3 @@ var Ball = function(color, radius, initX, initY, ctx) {
 
   this.init(color, radius, initX, initY, ctx);
 }
-
-$(document).on('turbolinks:load', function() {
-  // var canvas = document.getElementById("gameCanvas");
-  // var ctx = canvas.getContext("2d");
-  //
-  // var game = new PongGame(1, 3, 225, "#eee", canvas, ctx);
-
-  document.addEventListener("keydown", game.keyDownHandler, false);
-  document.addEventListener("keyup", game.keyUpHandler, false);
-  setInterval(game.draw, 10);
-});
