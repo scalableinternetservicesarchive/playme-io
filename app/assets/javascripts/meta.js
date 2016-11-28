@@ -122,20 +122,28 @@ var Meta = function(fayeClient, data) {
   this.updatePlayerList = function() {
     var list = document.getElementById("others");
     list.innerHTML = "";
+    count = 0;
     for (id in self.players) {
-      var li = document.createElement("li");
-      li.innerHTML = self.players[id]["username"] + " is " + self.players[id]["readystate"];
+      count += 1;
+      var new_row = document.createElement("div");
+      if (count == 1 || count == 3) {
+        new_row.className += " leftuser";
+      }
+      if (count == 2 || count == 4) {
+        new_row.className += " rightuser";
+      }
+      new_row.innerHTML = self.players[id]["username"];
       if(id == self.leaderId) {
-        li.innerHTML = "<img src='" + CROWN_IMG_URL + "' class='crownstyle'  >" + " " + li.innerHTML;
-        //li.innerHTML = "leader is: " + li.innerHTML;
+        new_row.innerHTML = "<img src='" + CROWN_IMG_URL + "' class='crownstyle'  >" + " " + new_row.innerHTML;
+        //div.innerHTML = "leader is: " + div.innerHTML;
       }
       if (self.players[id]["readystate"] == "ready") {
-        li.innerHTML = li.innerHTML + " " + "<img src='" + CHECK_IMG_URL + "' class='crownstyle'  >";
+        new_row.innerHTML = new_row.innerHTML + " " + "<img src='" + CHECK_IMG_URL + "' class='crownstyle'  >";
       }
       else {
-        li.innerHTML = li.innerHTML + " " + "<img src='" + NOCHECK_IMG_URL + "' class='crownstyle'  >";
+        new_row.innerHTML = new_row.innerHTML + " " + "<img src='" + NOCHECK_IMG_URL + "' class='crownstyle'  >";
       }
-      list.appendChild(li);
+      list.appendChild(new_row);
     }
   }
 

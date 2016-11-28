@@ -21,9 +21,27 @@
 
 </head>
 <body>
-  <div class="container">
+  <div class="headContainer">
+      <div class="lobbyInfo">
+        <h1>Lobby <span style= "color:#3399FF"><%= @lobby.name %></span> </h1>
+        <div id="inviteLink"><span align="center">Invite anyone by sharing this link: <input id="roomLink" type="text" onclick="this.select()"/></span></div>
+      </div>
+      <div class = "users userbox">
+        <div class="changeName">
+          <form id = "my_name">
+            <input id="name" type="text" name="name" placeholder="Your Name" style="border: 2px solid black; text-align:center;" />
+          </form>         
+          <button id="readyButton" class="readyButton" value="ready"> Ready? </button>
+
+        </div>
+        <div class="otherUsers twocolumns">
+          <ul id="others">
+          </ul>
+        </div>
+      </div>
+  </div>
+  <div class="container" style="display:none">
     <section class="content">
-      <h1>Lobby <span style= "color:#3399FF"><%= @lobby.name %></span> </h1>
       <div class="games">
           <div class="imgContainer">
             <%= image_tag 'chess.png', :class => "game-icons" %>
@@ -51,23 +69,10 @@
             <p><%= session.username %></p>
             <% end %>
           <% end %>
-          <span align="center">Invite anyone by sharing this link: <input id="roomLink" type="text" onclick="this.select()"/></span>
       </div>
     </section>
   </div>
-  <button id="readyButton" class="readyButton" value="ready"> Ready? </button>
   <canvas id="gameCanvas" width="720" height="480"></canvas>
-  <div class="users" style="position: fixed; top: 0px; left:0px;">
-    <form id="my_name" class="nameform">
-      <h4 style= "margin-left:auto; margin-right:auto;">Change your nickname here</h4>
-      <label>
-        <span>Your name: </span>
-        <input id="name" type="text" name="name" />
-      </label>
-    </form>
-    <ul id="others">
-    </ul>
-  </div>
   <div class="chat_room">
     <div class="chat_header">
       <h1> Chat </h1>
