@@ -125,7 +125,14 @@ var Meta = function(fayeClient, data) {
       var li = document.createElement("li");
       li.innerHTML = id + ": " + self.players[id]["username"] + " is " + self.players[id]["readystate"];
       if(id == self.leaderId) {
-        li.innerHTML = "leader is: " + li.innerHTML;
+        li.innerHTML = "<img src='" + CROWN_IMG_URL + "' class='crownstyle'  >" + " " + li.innerHTML;
+        //li.innerHTML = "leader is: " + li.innerHTML;
+      }
+      if (self.players[id]["readystate"] == "ready") {
+        li.innerHTML = li.innerHTML + " " + "<img src='" + CHECK_IMG_URL + "' class='crownstyle'  >";
+      }
+      else {
+        li.innerHTML = li.innerHTML + " " + "<img src='" + NOCHECK_IMG_URL + "' class='crownstyle'  >";
       }
       list.appendChild(li);
     }

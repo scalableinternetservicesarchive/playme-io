@@ -14,7 +14,7 @@ Chat.prototype.onMessage = function(data) {
 }
 Chat.prototype.sendMessage = function(message) {
   this.fayeClient.publish(this.chatChannel, {
-    username: this.meta.players[this.meta.userId],
+    username: this.meta.players[this.meta.userId]["username"],
     msg: message
   });
 }

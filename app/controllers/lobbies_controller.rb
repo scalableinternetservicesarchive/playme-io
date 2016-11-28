@@ -13,12 +13,13 @@ class LobbiesController < ApplicationController
     if @lobby.save
       redirect_to action: "show",id:@lobby.name
     else
-      render html: "couldn't save lobby"
+      render html: "lobby already exists"
     end
   end
   def show
     @lobby = Lobby.find_by(name: params[:id])
     if @lobby.nil?
+      print "RECORD NOT FOUND"
       raise ActiveRecord::RecordNotFound
     end
     if session_activated?

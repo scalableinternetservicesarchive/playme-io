@@ -55,11 +55,15 @@
       </div>
     </section>
   </div>
-  <button id="readyButton" style="top:200px; position:relative" value="ready"> I m redy! </button>
+  <button id="readyButton" class="readyButton" value="ready"> I m redy! </button>
   <canvas id="gameCanvas" width="720" height="480"></canvas>
   <div class="users" style="position: fixed; top: 0px; left:0px;">
-    <form id="my_name">
-      <input id="name" type="text" name="name" />
+    <form id="my_name" class="nameform">
+      <h4 style= "margin-left:auto; margin-right:auto;">Change your nickname here</h4>
+      <label>
+        <span>Your name: </span>
+        <input id="name" type="text" name="name" />
+      </label>
     </form>
     <ul id="others">
     </ul>
@@ -82,6 +86,10 @@
   <script type="text/javascript">
     // document.getElementById("roomLink").value = document.location.href; // automatically adds lobby url to text box
     // lobby meta data
+
+    var CROWN_IMG_URL = "<%= asset_path 'crown.png'%>";
+    var CHECK_IMG_URL = "<%= asset_path 'checkmark.png'%>";
+    var NOCHECK_IMG_URL = "<%= asset_path 'redx.png'%>";
     var client = new Faye.Client('/faye');
     var players = JSON.parse('<%= players_json.html_safe %>');
     var data = {"lobbyName": "<%= @lobby.name %>", "leaderId": <%= @lobby.leader_id %>, "players": players, "userId": <%= current_session.id %>,

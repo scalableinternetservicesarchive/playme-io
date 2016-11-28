@@ -22,6 +22,29 @@
   margin: auto;
 }
 
+.nameform {
+	border:1px solid #E4E4E4;
+    background: #F7F7F7;
+    padding: 25px 25px 25px 25px;
+}
+
+.crownstyle {
+	width: 15px;
+	height: 15px;
+}
+
+.readyButton {
+	border: 2px solid #d1d1e0;
+	background-color: #e0e0eb;
+	border-color: none;
+	color: black;
+	border-radius: 5px;
+	left: 100px;
+	top:200px; 
+	position:relative;
+
+}
+
 .imgContainer {
   float: left;
 }
