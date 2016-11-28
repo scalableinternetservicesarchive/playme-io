@@ -34,6 +34,7 @@
 }
 
 .readyButton {
+	margin-top: 20px;
 	border: 2px solid #d1d1e0;
 	background-color: #e0e0eb;
 	border-color: none;

@@ -111,6 +111,7 @@ var Meta = function(fayeClient, data) {
         $("#readyButton")[0].disabled = false;
       }
       else {
+        console.log("disabling my button");
         $("#readyButton")[0].disabled = true;
       }
       console.log($("#readyButton")[0].disabled);
@@ -123,7 +124,7 @@ var Meta = function(fayeClient, data) {
     list.innerHTML = "";
     for (id in self.players) {
       var li = document.createElement("li");
-      li.innerHTML = id + ": " + self.players[id]["username"] + " is " + self.players[id]["readystate"];
+      li.innerHTML = self.players[id]["username"] + " is " + self.players[id]["readystate"];
       if(id == self.leaderId) {
         li.innerHTML = "<img src='" + CROWN_IMG_URL + "' class='crownstyle'  >" + " " + li.innerHTML;
         //li.innerHTML = "leader is: " + li.innerHTML;
@@ -151,12 +152,12 @@ $(document).on('turbolinks:load', function() {
     if($button.attr("value") == "ready") {
       meta.sendChange("state_change", "ready")
       $button.attr("value", "not_ready")
-      $button.html("I m not redy!")
+      $button.html("Not Ready!")
     }
     else if($button.attr("value") == "not_ready") {
       meta.sendChange("state_change", "not_ready")
       $button.attr("value", "ready")
-      $button.html("I m redy!")
+      $button.html("Ready!")
     }
     else if($button.attr("value") == "start") {
       meta.sendChange("game_start", true);
