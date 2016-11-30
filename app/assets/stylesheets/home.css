@@ -1,25 +1,144 @@
 #gameCanvas {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 250px;
-  margin: auto;
+	border: 5px solid gray;
+	position: absolute;
+	top: 200px;
+	left: 0;
+	right: 100px;
+	margin: auto;
 }
 
 .container {
   font-family: 'Source Sans Pro', sans-serif;
 
   width: 700px;
-  height: 700px;
+  height: 500px;
 
   position: absolute;
-  top: 0px;
-  bottom: 0;
+  top: 200px;
   left: 0;
-  right: 0;
+  right: 100px;
 
   margin: auto;
+}
+
+.headContainer {
+	font-family: 'Source Sans Pro', sans-serif;
+
+	width:75%;
+	height: 200px;
+
+	position: absolute;
+	float:left;
+	top: 30px;
+	bottom: 0;
+	left: 0;
+	right: 0;
+
+	margin: 0 1% 0 1%;
+}
+
+.lobbyInfo, .users, .changeName, .otherUsers {
+	float:left;
+}
+
+.changeName {
+	width: 50%;
+}
+input#name {
+	width: 100%;
+    font-size: 20px;
+}
+.otherUsers.twocolumns {
+	width: 50%;
+	text-align: right;
+}
+ul#others {
+    width: 100%;
+    margin: 0px;
+    padding: 0px;
+}
+.lobbyInfo {
+	width: 40%;
+}
+
+.lobbyInfo h1 {
+	font-size: 50px;
+}
+
+#inviteLink {
+	font-size: 20px;
+}
+
+#roomLink {
+	width:70%;
+}
+
+::-webkit-input-placeholder {
+   text-align: center;
+}
+
+:-moz-placeholder { /* Firefox 18- */
+   text-align: center;  
+}
+
+::-moz-placeholder {  /* Firefox 19+ */
+   text-align: center;  
+}
+
+:-ms-input-placeholder {  
+   text-align: center; 
+}
+
+
+.userbox {
+	height: 25vh;
+	width: 55%;
+	position: relative;
+	float: right;
+	padding-top: 25px;
+}
+
+.twocolumns {
+	/*-webkit-column-count: 2; 
+    -moz-column-count: 2;
+    column-count: 2;*/
+}
+
+.leftuser {
+	float: left;
+	width: 50%;
+}
+
+.rightuser {
+	float: right;
+	width: 50%;
+}
+
+
+#name {
+	border: 2px solid #eee; 
+	text-align:center;
+}
+
+#name:focus{
+	border: 2px solid black; 
+}
+.crownstyle {
+	width: 15px;
+	height: 15px;
+}
+
+.readyButton {
+	border: 2px solid #d1d1e0;
+	background-color: #e0e0eb;
+	border-color: none;
+	color: black;
+	border-radius: 5px;
+	position:relative;
+	width: 50%;
+    margin: 0 25%;
+    margin-top: 10px;
+
 }
 
 .imgContainer {

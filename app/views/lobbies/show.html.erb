@@ -21,9 +21,30 @@
 
 </head>
 <body>
-  <div class="container">
+  <div class="headContainer">
+      <div class="lobbyInfo">
+        <h1>Lobby <span style= "color:#3399FF"><%= @lobby.name %></span> </h1>
+        <div id="inviteLink">
+          <span align="center">Invite anyone by sharing this link:</span>
+          <div style="margin-top:10px;"> <input id="roomLink" type="text" onclick="this.select()" /></div>
+        </div>
+      </div>
+      <div class = "users userbox">
+        <div class="changeName">
+          <form id = "my_name">
+            <input id="name" type="text" name="name" placeholder="Your Name" />
+          </form>         
+          <button id="readyButton" class="readyButton" value="ready"> Ready? </button>
+
+        </div>
+        <div class="otherUsers twocolumns">
+          <ul id="others">
+          </ul>
+        </div>
+      </div>
+  </div>
+  <div class="container" style="display:none">
     <section class="content">
-      <h1>Lobby <span style= "color:#3399FF"><%= @lobby.name %></span> </h1>
       <div class="games">
           <div class="imgContainer">
             <%= image_tag 'chess.png', :class => "game-icons" %>
@@ -51,19 +72,10 @@
             <p><%= session.username %></p>
             <% end %>
           <% end %>
-          <span align="center">Invite anyone by sharing this link: <input id="roomLink" type="text" onclick="this.select()"/></span>
       </div>
     </section>
   </div>
-  <button id="readyButton" style="top:200px; position:relative" value="ready"> I m redy! </button>
   <canvas id="gameCanvas" width="720" height="480"></canvas>
-  <div class="users" style="position: fixed; top: 0px; left:0px;">
-    <form id="my_name">
-      <input id="name" type="text" name="name" />
-    </form>
-    <ul id="others">
-    </ul>
-  </div>
   <div class="chat_room">
     <div class="chat_header">
       <h1> Chat </h1>
@@ -82,6 +94,10 @@
   <script type="text/javascript">
     // document.getElementById("roomLink").value = document.location.href; // automatically adds lobby url to text box
     // lobby meta data
+
+    var CROWN_IMG_URL = "<%= asset_path 'crown.png'%>";
+    var CHECK_IMG_URL = "<%= asset_path 'checkmark.png'%>";
+    var NOCHECK_IMG_URL = "<%= asset_path 'redx.png'%>";
     var client = new Faye.Client('/faye');
     var players = JSON.parse('<%= players_json.html_safe %>');
     var data = {"lobbyName": "<%= @lobby.name %>", "leaderId": <%= @lobby.leader_id %>, "players": players, "userId": <%= current_session.id %>,

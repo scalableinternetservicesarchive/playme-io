@@ -111,6 +111,7 @@ var Meta = function(fayeClient, data) {
         $("#readyButton")[0].disabled = false;
       }
       else {
+        console.log("disabling my button");
         $("#readyButton")[0].disabled = true;
       }
       console.log($("#readyButton")[0].disabled);
@@ -121,13 +122,28 @@ var Meta = function(fayeClient, data) {
   this.updatePlayerList = function() {
     var list = document.getElementById("others");
     list.innerHTML = "";
+    count = 0;
     for (id in self.players) {
-      var li = document.createElement("li");
-      li.innerHTML = id + ": " + self.players[id]["username"] + " is " + self.players[id]["readystate"];
-      if(id == self.leaderId) {
-        li.innerHTML = "leader is: " + li.innerHTML;
+      count += 1;
+      var new_row = document.createElement("div");
+      if (count == 1 || count == 3) {
+        new_row.className += " leftuser";
       }
-      list.appendChild(li);
+      if (count == 2 || count == 4) {
+        new_row.className += " rightuser";
+      }
+      new_row.innerHTML = self.players[id]["username"];
+      if(id == self.leaderId) {
+        new_row.innerHTML = "<img src='" + CROWN_IMG_URL + "' class='crownstyle'  >" + " " + new_row.innerHTML;
+        //div.innerHTML = "leader is: " + div.innerHTML;
+      }
+      if (self.players[id]["readystate"] == "ready") {
+        new_row.innerHTML = new_row.innerHTML + " " + "<img src='" + CHECK_IMG_URL + "' class='crownstyle'  >";
+      }
+      else {
+        new_row.innerHTML = new_row.innerHTML + " " + "<img src='" + NOCHECK_IMG_URL + "' class='crownstyle'  >";
+      }
+      list.appendChild(new_row);
     }
   }
 
@@ -144,12 +160,12 @@ $(document).on('turbolinks:load', function() {
     if($button.attr("value") == "ready") {
       meta.sendChange("state_change", "ready")
       $button.attr("value", "not_ready")
-      $button.html("I m not redy!")
+      $button.html("Not Ready!")
     }
     else if($button.attr("value") == "not_ready") {
       meta.sendChange("state_change", "not_ready")
       $button.attr("value", "ready")
-      $button.html("I m redy!")
+      $button.html("Ready!")
     }
     else if($button.attr("value") == "start") {
       meta.sendChange("game_start", true);
