@@ -35,7 +35,6 @@
             <th>Score</th>
           </tr>
           <% @highscores.each do |highscore| %>
-            <% cache(cache_key_for_highscore(highscore)) do %>
             <tr>
               <td>
                 <%= highscore.username %>
@@ -47,7 +46,6 @@
                 <%= highscore.score %>
               </td>
             </tr>
-            <% end %>
           <% end %>
         </table>
     </section>
