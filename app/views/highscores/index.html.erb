@@ -1,0 +1,56 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>Play Me | Play Multiplayer Games with Friends</title>
+  <meta name="description" content="Playme.io">
+  <meta name="author" content="Andy Yu">
+
+  <!-- Styles -->
+  <%= stylesheet_link_tag "home" %>
+  <%= stylesheet_link_tag "normalize" %>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+
+  <!-- jQuery -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+</head>
+<body>
+  <div class="headContainer">
+      <div class="lobbyInfo">
+        <h1>Highscores</h1>
+      </div>
+  </div>
+  <div class="container">
+    <section class="content">
+      <table>
+          <tr>
+            <th>Username</th>
+            <th>Game</th>
+            <th>Score</th>
+          </tr>
+          <% @highscores.each do |highscore| %>
+            <% cache(cache_key_for_highscore(highscore)) do %>
+            <tr>
+              <td>
+                <%= highscore.username %>
+              </td>
+              <td>
+                <%= highscore.game %>
+              </td>
+              <td>
+                <%= highscore.score %>
+              </td>
+            </tr>
+            <% end %>
+          <% end %>
+        </table>
+    </section>
+  </div>
+</body>
+</html>

@@ -11,6 +11,7 @@ Rails.application.config.assets.version = '1.0'
 Rails.application.config.assets.precompile += %w( home.css )
 Rails.application.config.assets.precompile += %w( normalize.css )
 Rails.application.config.assets.precompile += %w( chat.css )
+Rails.application.config.assets.precompile += %w( classie.js )
 Rails.application.config.assets.precompile += %w( chat.js )
 Rails.application.config.assets.precompile += %w( pong.js )
 Rails.application.config.assets.precompile += %w( meta.js )
