@@ -1,7 +1,12 @@
 Rails.application.routes.draw do
+  get 'highscores/index'
+
+  get 'highscores/list'
+
   resources :lobbies do
     get 'status'
   end
+  resources :highscores
   get 'users/new'
   get 'static_pages/home'
   get 'static_pages/about'
