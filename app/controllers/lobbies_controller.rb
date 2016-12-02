@@ -58,7 +58,7 @@ class LobbiesController < ApplicationController
     player_index = get_next_player_index
     if player_index == -1
       # if lobby has 4 players already, raise error
-      raise ActiveRecord::RecordNotFound
+      raise Exceptions::LobbyFullException.new(@lobby.name)
     end
     session.player_index = player_index
     session.readystate = "not_ready"

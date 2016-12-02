@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
 
-  <title>Play Me | Play Multiplayer Games with Friends</title>
+  <title>Lobby Full | Play Multiplayer Games with Friends</title>
   <meta name="description" content="Playme.io">
   <meta name="author" content="Andy Yu">
 
@@ -12,56 +12,15 @@
   <%= stylesheet_link_tag "home" %>
   <%= stylesheet_link_tag "normalize" %>
 
-<style type="text/css">
-	#submit_tag {
-		border: 2px solid #d1d1e0;
-		background-color: #e0e0eb;
-		border-color: none;
-		color: black;
-		border-radius: 5px;
-		position:relative;
-		width: 50%;
-		margin: 0 25%;
-		margin-top: 10px;
-	}
-
-	#username {
-		width: 100%;
-		border: 2px solid #eee; 
-		text-align:center;
-	}
-
-	#username:focus{
-		border: 2px solid black; 
-	}
-
-</style>
-
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
 
 </head>
 <body>
-  <div class="headContainer">
-      <div class = "users userbox">
-        <div class="changeName">
-        	<h1 style="text-align: center;"> Lobby Full </h1>
-			<%= form_tag url_for(:controller => 'lobbies', :action => 'show'), :method => 'post' do %>
-	            <input id="name" type="text" name="username" placeholder="What's your name?" />
-			  <%= submit_tag 'Join Lobby' , :id => "submit_tag"%>
-			<% end %>
-		
-		<!--
-          <form id = "my_name">
-            <input id="name" type="text" name="name" placeholder="What's your name?" />
-          </form>         
-          <button id="readyButton" class="readyButton" value="go"> Ready? </button>
-		-->
-        </div>
-      </div>
+  <div class="container">
+    <h1>Oops! Seems like this lobby is full :( </h1>
+    <h4>Create your own lobby <a href="/">here</a>.</h4>
   </div>
-  
-
 </body>
 </html>
