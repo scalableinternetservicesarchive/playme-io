@@ -4,12 +4,13 @@ var Meta = function(fayeClient, data) {
   this.init = function(fayeClient, data) {
     self.lobbyName = data.lobbyName;
     self.userId = data.userId;
-    self.username = data.username;
     self.leaderId = data.leaderId;
     self.playerIndex = data.playerIndex;
     self.fayeClient = fayeClient;
     self.metaChannel = "/" + this.lobbyName + "/meta";
+    self.gameChannel = "/" + this.lobbyName + "/game";
     self.fayeClient.subscribe(this.metaChannel, this.onChange);
+    self.game = null;
     // other props
     self.players = data.players;
     self.sendChange("player_join", self.players[self.userId]);
@@ -37,14 +38,29 @@ var Meta = function(fayeClient, data) {
       case "game_start":
         self.onGameStart(data.value);
         break;
+      case "game_end":
+        self.onGameEnd(data.value);
+        break;
     }
   }
 
   this.onGameStart = function(value) {
     if(value) {
-      var game = new PongGame(Object.keys(players).length, 225, "#eee", canvas, ctx, self, client);
-      game.startGame();
+      self.game = new PongGame(Object.keys(players).length, 225, "#eee", canvas, ctx, self, client);
+      self.game.startGame();
     }
+  }
+
+  this.onGameEnd = function(value) {
+    console.log("[Game End]");
+    console.log(value);
+    if(value == self.playerIndex) {
+      self.fayeClient.publish(self.gameChannel, {
+        "action": "game_end",
+        "value": self.players[self.userId]["username"]
+      });
+    }
+    delete self.game;
   }
 
   this.onLeaderChange = function(userId) {
@@ -99,7 +115,6 @@ var Meta = function(fayeClient, data) {
   }
 
   this.updateReadyStatusList = function() {
-    // do shit
     if(self.isLeader()){
       var start = true;
       for(var id in self.players) {

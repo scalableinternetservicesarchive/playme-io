@@ -12,6 +12,7 @@ var PongGame = function(numPlayers, boardRadius, boardColor, canvas, ctx, meta, 
     self.index = self.meta.playerIndex;
     self.fayeClient = client;
     self.gameChannel = "/" + self.meta.lobbyName + "/game";
+    self.metaChannel = "/" + self.meta.lobbyName + "/meta";
     self.fayeClient.subscribe(self.gameChannel, self.onMessage);
 
     self.boardColor = boardColor;
@@ -42,9 +43,19 @@ var PongGame = function(numPlayers, boardRadius, boardColor, canvas, ctx, meta, 
   this.startGame = function() {
     document.addEventListener("keydown", self.keyDownHandler, false);
     document.addEventListener("keyup", self.keyUpHandler, false);
-    setInterval(self.draw, 10);
+    self.gameLoop = setInterval(self.draw, 10);
   }
 
+  this.endGame = function(loserName) {
+    document.removeEventListener("keydown", self.keyDownHandler);
+    document.removeEventListener("keyup", self.keyUpHandler);
+    clearInterval(self.gameLoop);
+
+    // draw Game Over
+    self.ctx.clearRect(0, 0, canvas.width, canvas.height);
+    self.ctx.font = "35px Raleway";
+    self.ctx.fillText("Game Over! " + loserName + " has lost!",self.centerX - 200, self.centerY);
+  }
 
   // Faye
   this.onMessage = function(data) {
@@ -52,9 +63,23 @@ var PongGame = function(numPlayers, boardRadius, boardColor, canvas, ctx, meta, 
       case "keyPress":
         self.onReceiveKeyPress(data.value);
         break;
+      case "game_end":
+        self.onReceiveGameOver(data.value);
+        break;
       case "gameStateUpdate":
         break;
     }
+  }
+
+  this.sendGameOver = function(data) {
+    self.fayeClient.publish(self.metaChannel, {
+      "action": "game_end",
+      "value": data
+    });
+  }
+
+  this.onReceiveGameOver = function(value) {
+    self.endGame(value);
   }
 
   this.sendKeyPress = function(keyCode, keyState) {
@@ -139,11 +164,14 @@ var PongGame = function(numPlayers, boardRadius, boardColor, canvas, ctx, meta, 
       }
       if(bounce) {
       } else {
-        console.log("lose!");
-        self.ball.x = self.centerX;
-        self.ball.y = self.centerY;
-        self.ball.dx = 0;
-        self.ball.dy = 0;
+        for(var i = 0; i < self.paddles.length; i++) {
+          paddle = self.paddles[i];
+          normalizedStartBound = Math.PI*2 - paddle.startBound;
+          normalizedEndBound = Math.PI*2 - paddle.endBound;
+          if(polarRad <= normalizedStartBound && polarRad >= normalizedEndBound) { // ball has gone outside in the bounds of the paddle
+            self.sendGameOver(i);
+          }
+        }
       }
     }
   }
