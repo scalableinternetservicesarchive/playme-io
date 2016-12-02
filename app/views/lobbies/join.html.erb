@@ -1,0 +1,5 @@
+<h1>HELLO</h1>
+<%= form_tag url_for(:controller => 'lobbies', :action => 'show'), :method => 'post' do %>
+  <%= text_field_tag(:username) %>
+  <%= submit_tag 'Set username!' %>
+<% end %>
