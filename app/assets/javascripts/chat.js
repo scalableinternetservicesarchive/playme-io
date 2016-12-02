@@ -19,7 +19,6 @@ Chat.prototype.sendMessage = function(message) {
   });
 }
 $(document).on('turbolinks:load', function() {
-  document.getElementById("roomLink").value = document.location.href; // automatically adds lobby url to text box
   $('#message_form').submit(function(e){
     e.preventDefault();
     e.stopImmediatePropagation();

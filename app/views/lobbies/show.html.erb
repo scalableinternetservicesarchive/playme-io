@@ -32,8 +32,8 @@
       <div class = "users userbox">
         <div class="changeName">
           <form id = "my_name">
-            <input id="name" type="text" name="name" placeholder="Your Name" />
-          </form>         
+            <input id="name" type="text" name="name" value="<%= current_session.username %>" />
+          </form>
           <button id="readyButton" class="readyButton" value="ready"> Ready? </button>
 
         </div>
@@ -92,7 +92,7 @@
   </div>
   <script type="text/javascript" src="/faye.js"></script>
   <script type="text/javascript">
-    // document.getElementById("roomLink").value = document.location.href; // automatically adds lobby url to text box
+    document.getElementById("roomLink").value = document.location.href + "/join"; // automatically adds lobby url to text box
     // lobby meta data
 
     var CROWN_IMG_URL = "<%= asset_path 'crown.png'%>";

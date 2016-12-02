@@ -11,7 +11,9 @@ class LobbiesController < ApplicationController
     @lobby = Lobby.new(lobby_params)
     @lobby.state = "in_lobby"
     if @lobby.save
-      redirect_to action: "show",id:@lobby.name
+      redirect_to action: "join",id:@lobby.name
+      # redirect_to controller: 'lobbies', action: "status"
+
     else
       render html: "lobby already exists"
     end
@@ -22,14 +24,18 @@ class LobbiesController < ApplicationController
       print "RECORD NOT FOUND"
       raise ActiveRecord::RecordNotFound
     end
+    username = params[:username]
     if session_activated?
       if !(@lobby.sessions.include? current_session)
         deactivate_session
-        create_session
+        create_session(username)
       end
     else
-      create_session
+      create_session(username)
     end
+  end
+  def join
+    @lobby = Lobby.find_by(name: params[:id])
   end
 
   def status
@@ -47,15 +53,16 @@ class LobbiesController < ApplicationController
     redirect_to root_url
   end
 
-  def create_session
+  def create_session(username)
     session = @lobby.sessions.build
     player_index = get_next_player_index
     if player_index == -1
       # if lobby has 4 players already, raise error
-      raise ActiveRecord::RecordNotFound
+      raise Exceptions::LobbyFullException.new(@lobby.name)
     end
     session.player_index = player_index
     session.readystate = "not_ready"
+    session.username = username
     session.save
     activate_session session
     # assign first player to be the leader of the lobby

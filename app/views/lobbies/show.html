@@ -1,0 +1,46 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>Play Me | Play Multiplayer Games with Friends</title>
+  <meta name="description" content="Playme.io">
+  <meta name="author" content="Andy Yu">
+
+  <!-- Styles -->
+  <!--<%= stylesheet_link_tag "home" %>
+  <%= stylesheet_link_tag "normalize" %>
+  <%= stylesheet_link_tag "name" %>-->
+
+  <link rel="stylesheet" href="home.css">
+  <link rel="stylesheet" href="name.css">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+
+</head>
+<body>
+  <div class="headContainer">
+      <div class="lobbyInfo">
+        <h1>Lobby <span style= "color:#3399FF"><%= @lobby.name %></span> </h1>
+        <div id="inviteLink">
+          <span align="center">Invite anyone by sharing this link:</span>
+          <div style="margin-top:10px;"> <input id="roomLink" type="text" onclick="this.select()" /></div>
+        </div>
+      </div>
+      <div class = "users userbox">
+        <div class="changeName">
+          <form id = "my_name">
+            <input id="name" type="text" name="name" placeholder="What's your name?" />
+          </form>         
+          <button id="readyButton" class="readyButton" value="go"> Ready? </button>
+
+        </div>
+      </div>
+  </div>
+  
+
+</body>
+</html>

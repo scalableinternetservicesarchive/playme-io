@@ -5,6 +5,10 @@ Rails.application.routes.draw do
 
   resources :lobbies do
     get 'status'
+    member do
+      get :join
+      post :show
+    end
   end
   resources :highscores
   get 'users/new'
